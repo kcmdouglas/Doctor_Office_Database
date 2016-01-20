@@ -43,26 +43,25 @@ public class Specialty {
     }
   }
 
-//   public void save() {
-//     try(Connection con = DB.sql2o.open()) {
-//       String sql = "INSERT INTO doctors(name, specialty_id) VALUES (:name, :specialty_id)";
-//       this.id = (int) con.createQuery(sql, true)
-//         .addParameter("name", this.name)
-//         .addParameter("specialty_id", this.specialty_id)
-//         .executeUpdate()
-//         .getKey();
-//     }
-//   }
-//
-//   public static Doctor find(int id) {
-//     try(Connection con = DB.sql2o.open()) {
-//       String sql = "SELECT * FROM doctors where id=:id";
-//     Doctor doctor = con.createQuery(sql)
-//         .addParameter("id", id)
-//         .executeAndFetchFirst(Doctor.class);
-//       return doctor;
-//     }
-//   }
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO specialties(field) VALUES (:field)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("field", this.field)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static Specialty find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM specialties where id=:id";
+    Specialty specialty = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Specialty.class);
+      return specialty;
+    }
+  }
 //
 // public List<Task> getTasks(){
 //   try(Connection con = DB.sql2o.open()) {
