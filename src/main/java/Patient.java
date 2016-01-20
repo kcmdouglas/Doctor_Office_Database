@@ -1,14 +1,12 @@
 import java.util.List;
 import org.sql2o.*;
-import java.sql.Date;
-import java.util.Date;
 
 public class Patient {
   private int id;
   private String lastName;
   private String firstName;
-  private Date birthdate;
   private int doctorId;
+  private String birthdate;
 
   public int getId() {
     return id;
@@ -22,7 +20,7 @@ public class Patient {
     return firstName;
   }
 
-  public Date getBirthdate() {
+  public String getBirthdate() {
     return birthdate;
   }
 
@@ -30,7 +28,7 @@ public class Patient {
     return doctorId;
   }
 
-  public Patient(String lastName, String firstName, Date birthdate, int doctorId) {
+  public Patient(String lastName, String firstName, String birthdate, int doctorId) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.birthdate = birthdate;
@@ -38,7 +36,7 @@ public class Patient {
   }
 
   public static List<Patient> all() {
-    String sql = "SELECT (last_name, first_name, birthdate, doctor_id) FROM patients";
+    String sql = "SELECT last_name AS lastName, first_name AS firstName, birthdate, doctor_id AS doctorId FROM patients";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Patient.class);
     }
@@ -50,13 +48,17 @@ public class Patient {
       return false;
     } else {
       Patient newPatient = (Patient) otherPatient;
-      return this.getLastName().equals(newPatient.getLastName());
+      return this.getId() == newPatient.getId() &&
+             this.getLastName().equals(newPatient.getLastName()) &&
+             this.getFirstName().equals(newPatient.getFirstName()) &&
+             this.getBirthdate().equals(newPatient.getBirthdate()) &&
+             this.getDoctorId() == newPatient.getDoctorId();
     }
   }
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO patients(last_name, first_name, birthdate, doctor_id) VALUES (:lastName, :firstName, :birthdate, :doctorId)";
+      String sql = "INSERT INTO patients (last_name, first_name, birthdate, doctor_id) VALUES (:lastName, :firstName, :birthdate, :doctorId)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("lastName", this.lastName)
         .addParameter("firstName", this.firstName)
@@ -69,7 +71,7 @@ public class Patient {
 
   public static Patient find(int id) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM patients where id=:id";
+      String sql = "SELECT id, last_name AS lastName, first_name AS firstName, birthdate, doctor_id AS doctorId FROM patients where id=:id";
     Patient patient = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetchFirst(Patient.class);
