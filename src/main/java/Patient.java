@@ -78,14 +78,14 @@ public class Patient {
       return patient;
     }
   }
-//
-// public List<Task> getTasks(){
-//   try(Connection con = DB.sql2o.open()) {
-//     String sql = "SELECT * FROM tasks where categoryId=:id";
-//     return con.createQuery(sql)
-//       .addParameter("id", this.id)
-//       .executeAndFetch(Task.class);
-//   }
-// }
+
+  // public List<Patients> getPatients(){
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT  id, last_name AS lastName, first_name AS firstName, birthdate, doctor_id AS doctorId  FROM patients WHERE doctor_id=:doctorId";
+  //     return con.createQuery(sql)
+  //       .addParameter("doctorId", this.doctorId)
+  //       .executeAndFetch(Patient.class);
+  //   }
+  // }
 //
 }

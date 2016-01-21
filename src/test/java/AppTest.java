@@ -27,7 +27,7 @@ public class AppTest extends FluentTest {
     goTo("http://localhost:4567/");
     assertThat(pageSource()).contains("To Do List");
   }
-  //
+  // 
   // @Test
   // public void categoryIsCreatedTest() {
   //   Category newCategory = new Category("Chores");
@@ -36,7 +36,7 @@ public class AppTest extends FluentTest {
   //   goTo(categoryPath);
   //   assertThat(pageSource()).contains("Chores");
   // }
-  //
+
   // @Test
   // public void categoryIsDisplayedTest() {
   //   Category newCategory = new Category("Chores");

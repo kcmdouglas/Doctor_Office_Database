@@ -1,0 +1,12 @@
+<h1>Administrator Home</h1>
+
+<h2>All Current Doctors</h2>
+#if ($doctor)
+  #foreach ($doctor in $doctors)
+    <h3><a href="/doctors/$doctor.getId()">$doctor.getName()</a></h3>
+  #end
+#else
+  <h3>There are no doctors listed! Add a new doctor below by clicking "Add Doctor"</h3>
+#end
+
+<a href="/doctors/new" class="btn btn-warning">Add Doctor</a>
